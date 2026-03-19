@@ -22,8 +22,8 @@ and their confidence scores are averaged into a final verdict. If both models ag
 the result is more trustworthy than either alone.
 
 **Models used:**
-- `haywoodsloan/ai-image-detector-deploy`: trained on a wide variety of AI-generated images
-- `Organika/sdxl-detector`: specialized for Stable Diffusion XL outputs
+- `haywoodsloan/ai-image-detector-deploy` - trained on a wide variety of AI-generated images
+- `Organika/sdxl-detector` - specialized for Stable Diffusion XL outputs
 
 ## Stack
 
@@ -42,7 +42,7 @@ streamlit run app.py
 
 Detection accuracy varies depending on the generator used. Models perform best
 on Stable Diffusion images and may struggle with newer generators like Midjourney.
-No detector is 100% accurate - results should always be interpreted with judgment.
+No detector is 100% accurate so results should always be interpreted with judgment.
 
 AI image detection is an active research problem - as generators improve, detectors
 need to be retrained to keep up.
