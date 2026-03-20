@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageOps
 from detector import load_detectors, analyze_image, combined_verdict
 import streamlit as st
 
