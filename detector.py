@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageOps
 from transformers import pipeline
 
 MODELS = {
@@ -20,6 +20,7 @@ LABEL_MAP = {
 def analyze_image(image, detectors):
     if not isinstance(image, Image.Image):
         image = Image.open(image).convert("RGB")
+    image = ImageOps.exif_transpose(image)  # fix iPhone/camera rotation metadata
     results = {}
     for name, detector in detectors.items():
         output = detector(image)

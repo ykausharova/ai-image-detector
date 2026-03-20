@@ -34,9 +34,15 @@ st.divider()
 
 label = verdict["verdict"]
 confidence = verdict["confidence"] * 100
-icon = "🔴" if label == "ARTIFICIAL" else "🟢"
 
-st.markdown(f"## {icon} {label}")
+if verdict["confidence"] < 0.4 or (label == "REAL" and verdict["confidence"] < 0.6):
+    icon, display_label = "🟡", "UNCERTAIN"
+elif label == "ARTIFICIAL":
+    icon, display_label = "🔴", "ARTIFICIAL"
+else:
+    icon, display_label = "🟢", "REAL"
+
+st.markdown(f"## {icon} {display_label}")
 st.markdown(f"**Confidence: {confidence:.1f}%**")
 st.progress(verdict["confidence"])
 
