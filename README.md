@@ -46,3 +46,8 @@ No detector is 100% accurate so results should always be interpreted with judgme
 
 AI image detection is an active research problem - as generators improve, detectors
 need to be retrained to keep up.
+
+## Notes
+
+- Handles EXIF rotation metadata from iPhone and camera photos automatically
+- Returns an uncertain verdict when model confidence is low, rather than forcing a binary result
