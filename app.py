@@ -1,6 +1,6 @@
-import streamlit as st
 from PIL import Image
 from detector import load_detectors, analyze_image, combined_verdict
+import streamlit as st
 
 st.set_page_config(page_title="AI Image Detector", page_icon="🔍", layout="centered")
 
@@ -18,7 +18,7 @@ if not uploaded_file:
     st.stop()
 
 try:
-    image = Image.open(uploaded_file).convert("RGB")
+    image = ImageOps.exif_transpose(Image.open(uploaded_file)).convert("RGB")
 except Exception:
     st.error("Could not open the image. Please try a different file.")
     st.stop()
@@ -35,7 +35,7 @@ st.divider()
 label = verdict["verdict"]
 confidence = verdict["confidence"] * 100
 
-if verdict["confidence"] < 0.4 or (label == "REAL" and verdict["confidence"] < 0.6):
+if confidence < 65:
     icon, display_label = "🟡", "UNCERTAIN"
 elif label == "ARTIFICIAL":
     icon, display_label = "🔴", "ARTIFICIAL"
