@@ -1,4 +1,4 @@
-from PIL import Image, ImageOps
+from PIL import Image
 from detector import load_detectors, analyze_image, combined_verdict
 import streamlit as st
 
@@ -18,7 +18,7 @@ if not uploaded_file:
     st.stop()
 
 try:
-    image = ImageOps.exif_transpose(Image.open(uploaded_file)).convert("RGB")
+    image = Image.open(uploaded_file).convert("RGB")
 except Exception:
     st.error("Could not open the image. Please try a different file.")
     st.stop()
@@ -35,7 +35,7 @@ st.divider()
 label = verdict["verdict"]
 confidence = verdict["confidence"] * 100
 
-if confidence < 65:
+if confidence < 70:
     icon, display_label = "🟡", "UNCERTAIN"
 elif label == "ARTIFICIAL":
     icon, display_label = "🔴", "ARTIFICIAL"
@@ -65,12 +65,14 @@ st.warning(
 
 with st.expander("About this project"):
     st.markdown("""
-    This tool runs two independent pre-trained models and combines their verdicts:
+    This tool runs three independent pre-trained models and combines their verdicts
+    using a weighted average that gives more influence to broader, more general detectors:
     - **General Detector** — trained on a wide variety of AI-generated images
     - **SDXL Detector** — specialized for Stable Diffusion XL outputs
+    - **Deep Fake Detector** — Vision Transformer trained on a large dataset of real and fake images
 
-    Running two models in parallel reduces false positives and gives a more reliable
-    signal than any single detector alone.
+    Running three models in parallel and weighting their outputs reduces false positives
+    and gives a more reliable signal than any single detector alone.
 
     AI image detection is an active research problem. Modern generators like Midjourney
     produce images that are increasingly hard to detect — this is a known open challenge

@@ -17,13 +17,15 @@ Try it live -> [huggingface.co/spaces/ykausharova/ai-image-detector](https://hug
 
 ## How it works
 
-Instead of relying on one model, two independent CNN classifiers analyze the image
-and their confidence scores are averaged into a final verdict. If both models agree,
-the result is more trustworthy than either alone.
+Three independent classifiers analyze the image and their confidence scores are
+combined using a weighted average. Giving more influence to broader, more general
+detectors reduces false positives and makes the final verdict more reliable than
+any single model alone.
 
 **Models used:**
-- `haywoodsloan/ai-image-detector-deploy` - trained on a wide variety of AI-generated images
-- `Organika/sdxl-detector` - specialized for Stable Diffusion XL outputs
+- `haywoodsloan/ai-image-detector-deploy` — trained on a wide variety of AI-generated images
+- `Organika/sdxl-detector` — specialized for Stable Diffusion XL outputs
+- `dima806/ai_vs_real_image_detection` — Vision Transformer trained on a large real/fake dataset
 
 ## Stack
 
@@ -46,8 +48,3 @@ No detector is 100% accurate so results should always be interpreted with judgme
 
 AI image detection is an active research problem - as generators improve, detectors
 need to be retrained to keep up.
-
-## Notes
-
-- Handles EXIF rotation metadata from iPhone and camera photos automatically
-- Returns an uncertain verdict when model confidence is low, rather than forcing a binary result
