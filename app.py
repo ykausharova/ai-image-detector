@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageOps
 from detector import load_detectors, analyze_image, combined_verdict
 import streamlit as st
 
@@ -18,7 +18,7 @@ if not uploaded_file:
     st.stop()
 
 try:
-    image = Image.open(uploaded_file).convert("RGB")
+    image = ImageOps.exif_transpose(Image.open(uploaded_file)).convert("RGB")
 except Exception:
     st.error("Could not open the image. Please try a different file.")
     st.stop()
